@@ -18,5 +18,4 @@ app.use('/api',apiRoutes);//any url starting with /api will be redirected to rou
 
 app.listen(ServerConfig.PORT,()=>{
     console.log(`Successfully started the server on PORT : ${ServerConfig.PORT}`);
-    //Logger.info("Successfully started the server",{msg:"something"});
 });
