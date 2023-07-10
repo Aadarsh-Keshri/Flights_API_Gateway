@@ -1,14 +1,17 @@
-const {UserRepository}=require('../repositories');
-const { Auth } = require('../utils/common');
+const {UserRepository,RoleRepository}=require('../repositories');
+const { Auth, Enums} = require('../utils/common');
 
 const AppError=require('../utils/errors/app-error');
 const {StatusCodes}=require('http-status-codes');
 
 const userRepo=new UserRepository();
+const roleRepo=new RoleRepository();
 
 async function create(data){
     try {
         const user=await userRepo.create(data);
+        const role=await roleRepo.getRoleByName(Enums.USER_ROLES_ENUMS.CUSTOMER);
+        user.addRole(role);
         return user;
     } catch (error) {
         if(error.name=='SequelizeValidationError' || error.name=='SequelizeUniqueConstraintError'){
