@@ -2,7 +2,7 @@ const rateLimit=require('express-rate-limit')
 const express=require('express');
 const {createProxyMiddleware}=require('http-proxy-middleware');
 
-const {ServerConfig}=require('./config');   //we don't need to specify whole path in index.js file
+const {ServerConfig}=require('./config'); 
 const apiRoutes = require('./routes');
 
 const app = express();
@@ -22,12 +22,24 @@ app.use('/flightsService',createProxyMiddleware({
 	changeOrigin: true,
 	pathRewrite: {'^/flightsService':'/'}
 }))
-app.use('/bookingService',createProxyMiddleware({
+
+app.use('/bookingService',/*[f1,f2],*/createProxyMiddleware({
 	target: ServerConfig.BOOKING_SERVICE,
 	changeOrigin: true
 }))
 
-app.use('/api',apiRoutes);//any url starting with /api will be redirected to routes folder
+
+// function f1(req,res,next){
+// 	console.log("f1");
+// 	next();
+// }
+
+// function f2(req,res,next){
+// 	console.log("f2");
+// 	next();
+// }
+
+app.use('/api',apiRoutes);
 
 app.listen(ServerConfig.PORT,()=>{
     console.log(`Successfully started the server on PORT : ${ServerConfig.PORT}`);
