@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(limiter);
 
 app.use('/flightsService',createProxyMiddleware({
-	target: ServerConfig.FLIGHT_SERVICE,
+	target: ServerConfig.FLIGHT_SERVICE, //http://localhost:[PORT]/ ; for docker:  http://flights_service:[PORT]/
 	changeOrigin: true,
 	pathRewrite: {'^/flightsService':'/'}
 }))
